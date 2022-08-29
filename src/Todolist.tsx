@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
 import {FilterValuesType} from "./App";
 
 export type TaskType = {
@@ -18,7 +18,8 @@ type PropsType = {
 export function Todolist(props: PropsType) {
 
     const [title, setTitle] = useState<string>("")
-    const taskItems = props.tasks.map(task => {
+    const taskItems = props.tasks.length
+        ? props.tasks.map(task => {
         return (
             <li key={task.id}>
                 <input type="checkbox" checked={task.isDone} />
@@ -27,12 +28,21 @@ export function Todolist(props: PropsType) {
             </li>
         )
     })
+    : <span>Tasks list is empty</span>
+
+    const changeTitle = (e: ChangeEvent<HTMLInputElement>)=>setTitle(e.currentTarget.value)
+    const onKeyDownAddTask = (e: KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === "enter") props.addTask(title)
+    }
+
+
     return <div>
         <h3>{props.title}</h3>
         <div>
             <input
                 value={title}
-                onChange={(e) => setTitle(e.currentTarget.value)}
+                onChange={changeTitle}
+                onKeyDown={onKeyDownAddTask}
             />
             <button onClick={() => props.addTask(title)}>+</button>
         </div>
