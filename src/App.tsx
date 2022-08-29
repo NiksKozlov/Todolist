@@ -1,9 +1,9 @@
-import React, {useState} from 'react';
-import './App.css';
-import {TaskType, Todolist} from './Todolist';
+import React, {useState} from "react";
+import "./App.css";
+import {TaskType, Todolist} from "./Todolist";
 import {v1} from "uuid";
 
-export type FilterValuesType = 'all' | 'active' | 'completed'
+export type FilterValuesType = "all" | "active" | "completed"
 
 function App() {
     //BLL:
