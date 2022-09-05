@@ -26,6 +26,10 @@ function App() {
         }, ...tasks])
     }
 
+    const changeStatus = (taskID: string, isDone: boolean) => {
+        setTasks(tasks.map(t=>t.id !== taskID ? t : {...t, isDone: !t.isDone}))
+    }
+
     const changeFilter = (filter: FilterValuesType) => {
         setFilter(filter)
     }
@@ -45,11 +49,13 @@ function App() {
     return (
         <div className="App">
             <Todolist
+                filter={filter}
                 title={todoListTitle}
                 tasks={getTasksForTodolist()}
                 removeTask={removeTask}
                 changeFilter={changeFilter}
                 addTask={addTask}
+                changeStatus={changeStatus}
             />
         </div>
     );

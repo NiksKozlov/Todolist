@@ -6,3 +6,19 @@
 .App > div {
   margin-right: 50px;
 }
+
+.isDone {
+  color: hotpink;
+  font-weight: bold;
+  text-decoration: line-through;
+}
+
+.btn-active {
+  background-color: hotpink;
+  color: white;
+  border-color: hotpink;
+}
+
+.error {
+  border-color: red;
+}
