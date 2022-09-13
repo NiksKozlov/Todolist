@@ -37,14 +37,15 @@ function App() {
 
 
 
-    const removeTask = (taskID: string, todoListId: string) => {
+    const removeTask = (taskId: string, todoListId: string) => {
         // const todoListsTasks = tasks[todoListId]
         // const updatedTasks = todoListsTasks.filter(t => t.id !== todoListId)
         // const copyTask = {...tasks}
         // copyTask[todoListId] = updatedTasks
         // setTasks(copyTask)
-        //
-        setTasks({...tasks, [todoListId]: tasks[todoListId].filter(t => t.id !== todoListId)})
+
+
+        setTasks({...tasks, [todoListId]: tasks[todoListId].filter(t => t.id !== taskId)})
     }
 
     const addTask = (title: string, todoListId: string) => {
@@ -81,27 +82,31 @@ function App() {
     }
 
     //UI:
-    const getTasksForTodolist = () => {
-        switch (filter) {
+    const getTasksForTodolist = (todoList: TodoListType) => {
+        switch (todoList.filter) {
             case 'active':
-                return tasks.filter(t => !t.isDone)
+                return tasks[todoList.id].filter(t => !t.isDone)
             case 'completed':
-                return tasks.filter(t => t.isDone)
+                return tasks[todoList.id].filter(t => t.isDone)
             default:
-                return tasks
+                return tasks[todoList.id]
         }
     }
 
     const todoListsComponents = todoLists.map(tl => {
+        const tasks = getTasksForTodolist(tl)
         return (
             <Todolist
-                filter={filter}
-                title={todoListTitle}
-                tasks={getTasksForTodolist()}
+                key = {tl.id}
+                todoListId={tl.id}
+                filter={tl.filter}
+                title={tl.title}
+                tasks={tasks}
                 removeTask={removeTask}
                 changeFilter={changeFilter}
                 addTask={addTask}
                 changeStatus={changeStatus}
+                removeTodoList={removeTodoList}
             />
         )
     })
