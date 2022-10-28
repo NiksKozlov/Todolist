@@ -1,4 +1,4 @@
-import React, {ChangeEvent} from 'react';
+import React, {ChangeEvent, useCallback} from 'react';
 import {Button, ButtonGroup, Checkbox, IconButton, List, ListItem} from '@material-ui/core';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import {FilterValuesType} from './AppWithRedux';
@@ -7,7 +7,7 @@ import AddItemForm from './AddItemForm';
 import {useDispatch, useSelector} from 'react-redux';
 import {AppRootStateType} from './store/store';
 import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from './store/tasks-reducer';
-import {changeTodoListFilterAC, changeTodoListTitleAC, removeTodoListAC} from './store/todolists-reducer';
+import {changeTodolistFilterAC, changeTodolistTitleAC, removeTodolistAC} from './store/todolists-reducer';
 
 export type TaskType = {
     id: string
@@ -16,31 +16,31 @@ export type TaskType = {
 }
 
 type TodolistReduxPropsType = {
-    todoListId: string
+    todolistId: string
     title: string
     filter: FilterValuesType
 }
 
 
-export function TodolistRedux({todoListId, title, filter}: TodolistReduxPropsType) {
+export function TodolistRedux({todolistId, title, filter}: TodolistReduxPropsType) {
 
-    let tasks = useSelector<AppRootStateType, Array<TaskType>>(state => state.tasks[todoListId])
+    let tasks = useSelector<AppRootStateType, Array<TaskType>>(state => state.tasks[todolistId])
     const dispatch = useDispatch()
 
     const removeTodolist = () => {
-        dispatch(removeTodoListAC(todoListId))
+        dispatch(removeTodolistAC(todolistId))
     }
 
     const changeTodoLIstTitle = (title: string) => {
-        dispatch(changeTodoListTitleAC(title, todoListId))
+        dispatch(changeTodolistTitleAC(title, todolistId))
     }
 
-    const addTask = (title: string) => {
-        dispatch(addTaskAC(title, todoListId))
-    }
+    const addTask = useCallback((title: string) => {
+        dispatch(addTaskAC(title, todolistId))
+    }, [todolistId])
 
     const handlerCreator = (filter: FilterValuesType, todoListId: string) => {
-        return () => dispatch(changeTodoListFilterAC(filter, todoListId))
+        return () => dispatch(changeTodolistFilterAC(filter, todoListId))
     }
 
 
@@ -66,13 +66,13 @@ export function TodolistRedux({todoListId, title, filter}: TodolistReduxPropsTyp
             <List>
                 {
                     tasks.map(t => {
-                        const onClickHandler = () => dispatch(removeTaskAC(t.id, todoListId))
+                        const onClickHandler = () => dispatch(removeTaskAC(t.id, todolistId))
                         const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
                             let newIsDoneValue = e.currentTarget.checked
-                            dispatch(changeTaskStatusAC(t.id, newIsDoneValue, todoListId))
+                            dispatch(changeTaskStatusAC(t.id, newIsDoneValue, todolistId))
                         }
                         const onTitleChangeHandler = (title: string) => {
-                            dispatch(changeTaskTitleAC(t.id, title, todoListId))
+                            dispatch(changeTaskTitleAC(t.id, title, todolistId))
                         }
                         return (
                             <ListItem
@@ -101,15 +101,15 @@ export function TodolistRedux({todoListId, title, filter}: TodolistReduxPropsTyp
                 <ButtonGroup size="small" variant="contained" disableElevation>
                     <Button
                         color={filter === 'all' ? 'secondary' : 'primary'}
-                        onClick={handlerCreator('all', todoListId)}>All
+                        onClick={handlerCreator('all', todolistId)}>All
                     </Button>
                     <Button
                         color={filter === 'active' ? 'secondary' : 'primary'}
-                        onClick={handlerCreator('active', todoListId)}>Active
+                        onClick={handlerCreator('active', todolistId)}>Active
                     </Button>
                     <Button
                         color={filter === 'completed' ? 'secondary' : 'primary'}
-                        onClick={handlerCreator('completed', todoListId)}>Completed
+                        onClick={handlerCreator('completed', todolistId)}>Completed
                     </Button>
                 </ButtonGroup>
             </div>

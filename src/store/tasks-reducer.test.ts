@@ -1,6 +1,6 @@
 import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, tasksReducer} from './tasks-reducer'
 import { TasksStateType } from '../AppWithRedux'
-import {addTodoListAC} from './todolists-reducer';
+import {addTodolistAC} from './todolists-reducer';
 
 
 let startState: TasksStateType
@@ -75,7 +75,7 @@ test('Title of specified task should be changed', () => {
 
 test('new array should be added when new todolist is added', () => {
 
-    const action = addTodoListAC('new todolist')
+    const action = addTodolistAC('new todolist')
 
     const endState = tasksReducer(startState, action)
 
