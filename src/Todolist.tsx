@@ -42,6 +42,16 @@ export const Todolist = memo(({todolistId, title, filter}: TodolistReduxPropsTyp
         dispatch(addTaskAC(title, todolistId))
     }, [todolistId])
 
+    const removeTask = useCallback((taskId: string) => dispatch(removeTaskAC(taskId, todolistId)),[todolistId])
+
+    const changeTaskStatus = useCallback((taskId: string, status: boolean) => {
+        dispatch(changeTaskStatusAC(taskId, status, todolistId))
+    },[todolistId])
+
+    const changeTaskTitle = useCallback((taskId: string, title: string) => {
+        dispatch(changeTaskTitleAC(taskId, title, todolistId))
+    },[todolistId])
+
     const handlerCreator = (filter: FilterValuesType, todoListId: string) => {
         return () => dispatch(changeTodolistFilterAC(filter, todoListId))
     }
@@ -67,7 +77,17 @@ export const Todolist = memo(({todolistId, title, filter}: TodolistReduxPropsTyp
             </h3>
             <AddItemForm addItem={addTask} />
             <List>
-                { tasks.map(t => <Task key={t.id} task={t} todolistId={todolistId}/>) }
+                {
+                    tasks.map(t => {
+                        return <Task
+                            key={t.id}
+                            task={t}
+                            removeTask={removeTask}
+                            changeTaskStatus={changeTaskStatus}
+                            changeTaskTitle={changeTaskTitle}
+                        />
+                    })
+                }
             </List>
             <div>
                 <ButtonGroup size="small" variant="contained" disableElevation>

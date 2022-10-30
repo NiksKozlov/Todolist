@@ -3,26 +3,25 @@ import {Checkbox, IconButton, ListItem} from '@material-ui/core';
 import EditableSpan from './EditableSpan';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import {TaskType} from './Todolist';
-import {changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from './store/tasks-reducer';
-import {useDispatch} from 'react-redux';
+
 
 
 export type TaskPropsType = {
     task: TaskType
-    todolistId: string
+    removeTask: (taskId: string) => void
+    changeTaskStatus: (taskId: string, status: boolean) => void
+    changeTaskTitle: (taskId: string, title: string) => void
 }
 
-export const Task = memo(({task, todolistId}: TaskPropsType) => {
+export const Task = memo(({task, removeTask, changeTaskStatus, changeTaskTitle}: TaskPropsType) => {
 
-    const dispatch = useDispatch()
-
-    const removeTask = () => dispatch(removeTaskAC(task.id, todolistId))
-    const changeTaskStatus = (e: ChangeEvent<HTMLInputElement>) => {
+    const onClickHandler = () => removeTask(task.id)
+    const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
         let newIsDoneValue = e.currentTarget.checked
-        dispatch(changeTaskStatusAC(task.id, newIsDoneValue, todolistId))
+        changeTaskStatus(task.id, newIsDoneValue)
     }
-    const changeTaskTitle = (title: string) => {
-        dispatch(changeTaskTitleAC(task.id, title, todolistId))
+    const onTitleChangeHandler = (title: string) => {
+        changeTaskTitle(task.id, title)
     }
 
     return (
@@ -33,14 +32,14 @@ export const Task = memo(({task, todolistId}: TaskPropsType) => {
         >
             <Checkbox
                 style={{color: 'hotpink'}}
-                onChange={changeTaskStatus}
+                onChange={onChangeHandler}
                 checked={task.isDone}
             />
-            <EditableSpan title={task.title} changeTitle={changeTaskTitle} />
+            <EditableSpan title={task.title} changeTitle={onTitleChangeHandler} />
             <IconButton
                 color="primary"
                 size="small"
-                onClick={removeTask}>
+                onClick={onClickHandler}>
                 <DeleteOutlineIcon />
             </IconButton>
         </ListItem>
