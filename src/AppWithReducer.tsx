@@ -1,6 +1,6 @@
 import React, {useReducer, useState} from 'react';
 import './App.css';
-import {TaskType, Todolist} from './Todolist';
+import {TaskType, TodolistWithoutRedux} from './TodolistWithoutRedux';
 import {v1} from 'uuid';
 import AddItemForm from './AddItemForm';
 import {AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography} from '@material-ui/core';
@@ -116,7 +116,7 @@ function AppWithReducer() {
 
                             return <Grid key={tl.id} item>
                                 <Paper style={{padding: "10px"}}>
-                                    <Todolist
+                                    <TodolistWithoutRedux
                                         key={tl.id}
                                         todolistId={tl.id}
                                         title={tl.title}
