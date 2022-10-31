@@ -40,19 +40,9 @@ export const Todolist = memo(({todolistId, title, filter}: TodolistReduxPropsTyp
         dispatch(addTaskAC(title, todolistId))
     }, [todolistId])
 
-    const removeTask = useCallback((taskId: string) => dispatch(removeTaskAC(taskId, todolistId)),[todolistId])
-
-    const changeTaskStatus = useCallback((taskId: string, status: boolean) => {
-        dispatch(changeTaskStatusAC(taskId, status, todolistId))
-    },[todolistId])
-
-    const changeTaskTitle = useCallback((taskId: string, title: string) => {
-        dispatch(changeTaskTitleAC(taskId, title, todolistId))
-    },[todolistId])
-
-    const onAllClickHandler = useCallback(() => dispatch(changeTodolistFilterAC('all', todolistId)),[todolistId])
-    const onActiveClickHandler = useCallback(() => dispatch(changeTodolistFilterAC('active', todolistId)),[todolistId])
-    const onCompletedClickHandler = useCallback(() => dispatch(changeTodolistFilterAC('completed', todolistId)),[todolistId])
+    const onAllClickHandler = useCallback(() => dispatch(changeTodolistFilterAC('all', todolistId)), [todolistId])
+    const onActiveClickHandler = useCallback(() => dispatch(changeTodolistFilterAC('active', todolistId)), [todolistId])
+    const onCompletedClickHandler = useCallback(() => dispatch(changeTodolistFilterAC('completed', todolistId)), [todolistId])
 
 
     if (filter === 'active') {
@@ -80,9 +70,7 @@ export const Todolist = memo(({todolistId, title, filter}: TodolistReduxPropsTyp
                         return <Task
                             key={t.id}
                             task={t}
-                            removeTask={removeTask}
-                            changeTaskStatus={changeTaskStatus}
-                            changeTaskTitle={changeTaskTitle}
+                            todolistId={todolistId}
                         />
                     })
                 }
@@ -90,21 +78,21 @@ export const Todolist = memo(({todolistId, title, filter}: TodolistReduxPropsTyp
             <div>
                 <ButtonGroup size="small" variant="contained" disableElevation>
                     <ButtonWrapper
-                        titleButton='all'
+                        titleButton="all"
                         variant={filter === 'active' ? 'outlined' : 'text'}
-                        color='inherit'
+                        color="inherit"
                         onClickHandler={onAllClickHandler}
                     />
                     <ButtonWrapper
-                        titleButton='active'
+                        titleButton="active"
                         variant={filter === 'active' ? 'outlined' : 'text'}
-                        color='primary'
+                        color="primary"
                         onClickHandler={onActiveClickHandler}
                     />
                     <ButtonWrapper
-                        titleButton='completed'
+                        titleButton="completed"
                         variant={filter === 'completed' ? 'outlined' : 'text'}
-                        color='secondary'
+                        color="secondary"
                         onClickHandler={onCompletedClickHandler}
                     />
                 </ButtonGroup>

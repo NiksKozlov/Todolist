@@ -25,31 +25,6 @@ const App = () => {
 
     const dispatch = useDispatch()
 
-    //tasks CRUD
-    // const removeTask = (taskId: string, todoListId: string) => {
-    //     dispatch(removeTaskAC(taskId, todoListId))
-    // }
-    // const addTask = (title: string, todoListId: string) => {
-    //     dispatch(addTaskAC(title, todoListId))
-    // }
-    // const changeTaskStatus = (taskId: string, isDone: boolean, todoListId: string) => {
-    //     dispatch(changeTaskStatusAC(taskId, isDone, todoListId))
-    // }
-    // const changeTaskTitle = (taskId: string, title: string, todoListId: string) => {
-    //     dispatch(changeTaskTitleAC(taskId, title, todoListId))
-    // }
-
-
-    //todoLists CRUD
-    // const changeTodoListFilter = (filter: FilterValuesType, todoListId: string) => {
-    //     dispatch(changeTodolistFilterAC(filter, todoListId))
-    // }
-    // const changeTodoListTitle = (title: string, todoListId: string) => {
-    //     dispatch(changeTodolistTitleAC(title, todoListId))
-    // }
-    // const removeTodoList = (todoListId: string) => {
-    //     dispatch(removeTodolistAC(todoListId))
-    // }
     const addTodolist = useCallback((title: string) => {
         dispatch(addTodolistAC(title))
     }, [dispatch])
