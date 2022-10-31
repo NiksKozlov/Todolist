@@ -1,5 +1,5 @@
-import React, {ChangeEvent, memo, useCallback} from 'react';
-import {Button, ButtonGroup, Checkbox, IconButton, List, ListItem} from '@material-ui/core';
+import React, {memo, useCallback} from 'react';
+import {Button, ButtonGroup, IconButton, List} from '@material-ui/core';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import {FilterValuesType} from './App';
 import EditableSpan from './EditableSpan';
@@ -24,8 +24,6 @@ type TodolistReduxPropsType = {
 
 
 export const Todolist = memo(({todolistId, title, filter}: TodolistReduxPropsType) => {
-
-    console.log('Todolist rendering')
 
     let tasks = useSelector<AppRootStateType, Array<TaskType>>(state => state.tasks[todolistId])
     const dispatch = useDispatch()
@@ -52,9 +50,9 @@ export const Todolist = memo(({todolistId, title, filter}: TodolistReduxPropsTyp
         dispatch(changeTaskTitleAC(taskId, title, todolistId))
     },[todolistId])
 
-    const handlerCreator = (filter: FilterValuesType, todoListId: string) => {
-        return () => dispatch(changeTodolistFilterAC(filter, todoListId))
-    }
+    const onAllClickHandler = useCallback(() => dispatch(changeTodolistFilterAC('all', todolistId)),[todolistId])
+    const onActiveClickHandler = useCallback(() => dispatch(changeTodolistFilterAC('active', todolistId)),[todolistId])
+    const onCompletedClickHandler = useCallback(() => dispatch(changeTodolistFilterAC('completed', todolistId)),[todolistId])
 
 
     if (filter === 'active') {
@@ -69,8 +67,8 @@ export const Todolist = memo(({todolistId, title, filter}: TodolistReduxPropsTyp
             <h3>
                 <EditableSpan title={title} changeTitle={changeTodoLIstTitle} />
                 <IconButton
-                    size="small"
                     onClick={removeTodolist}
+                    size="small"
                     color="primary">
                     <DeleteOutlineIcon />
                 </IconButton>
@@ -91,20 +89,58 @@ export const Todolist = memo(({todolistId, title, filter}: TodolistReduxPropsTyp
             </List>
             <div>
                 <ButtonGroup size="small" variant="contained" disableElevation>
-                    <Button
-                        color={filter === 'all' ? 'secondary' : 'primary'}
-                        onClick={handlerCreator('all', todolistId)}>All
-                    </Button>
-                    <Button
-                        color={filter === 'active' ? 'secondary' : 'primary'}
-                        onClick={handlerCreator('active', todolistId)}>Active
-                    </Button>
-                    <Button
-                        color={filter === 'completed' ? 'secondary' : 'primary'}
-                        onClick={handlerCreator('completed', todolistId)}>Completed
-                    </Button>
+                    <ButtonWrapper
+                        titleButton='all'
+                        variant={filter === 'active' ? 'outlined' : 'text'}
+                        color='inherit'
+                        onClickHandler={onAllClickHandler}
+                    />
+                    <ButtonWrapper
+                        titleButton='active'
+                        variant={filter === 'active' ? 'outlined' : 'text'}
+                        color='primary'
+                        onClickHandler={onActiveClickHandler}
+                    />
+                    <ButtonWrapper
+                        titleButton='completed'
+                        variant={filter === 'completed' ? 'outlined' : 'text'}
+                        color='secondary'
+                        onClickHandler={onCompletedClickHandler}
+                    />
                 </ButtonGroup>
             </div>
         </div>
     )
 })
+
+type ButtonWrapperPropsType = {
+    titleButton: FilterValuesType
+    color: 'inherit' | 'primary' | 'secondary'
+    variant: 'outlined' | 'text'
+    onClickHandler: () => void
+}
+
+const ButtonWrapper = memo((props: ButtonWrapperPropsType) => {
+    return (
+        <Button
+            variant={props.variant}
+            color={props.color}
+            onClick={props.onClickHandler}>{props.titleButton}
+        </Button>
+    )
+})
+
+//     <ButtonGroup size="small" variant="contained" disableElevation>
+//          <Button
+//              color={filter === 'all' ? 'secondary' : 'primary'}
+//              onClick={onAllClickHandler}>All
+//          </Button>
+//          <Button
+//              color={filter === 'active' ? 'secondary' : 'primary'}
+//              onClick={onActiveClickHandler}>Active
+//          </Button>
+//          <Button
+//              color={filter === 'completed' ? 'secondary' : 'primary'}
+//              onClick={onCompletedClickHandler}>Completed
+//          </Button>
+//     </ButtonGroup>
