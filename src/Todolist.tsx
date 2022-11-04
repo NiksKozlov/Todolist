@@ -76,23 +76,23 @@ export const Todolist = memo(({todolistId, title, filter}: TodolistReduxPropsTyp
                 }
             </List>
             <div>
-                <ButtonGroup size="small" variant="contained" disableElevation>
+                <ButtonGroup size='small' variant='contained' disableElevation>
                     <ButtonWrapper
-                        titleButton="all"
-                        variant={filter === 'active' ? 'outlined' : 'text'}
-                        color="inherit"
+                        titleButton='all'
+                        variant={filter === 'all' ? 'outlined' : 'text'}
+                        color='inherit'
                         onClickHandler={onAllClickHandler}
                     />
                     <ButtonWrapper
-                        titleButton="active"
+                        titleButton='active'
                         variant={filter === 'active' ? 'outlined' : 'text'}
-                        color="primary"
+                        color='primary'
                         onClickHandler={onActiveClickHandler}
                     />
                     <ButtonWrapper
-                        titleButton="completed"
+                        titleButton='completed'
                         variant={filter === 'completed' ? 'outlined' : 'text'}
-                        color="secondary"
+                        color='secondary'
                         onClickHandler={onCompletedClickHandler}
                     />
                 </ButtonGroup>
