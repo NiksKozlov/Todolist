@@ -3,8 +3,8 @@ import './App.css';
 import {TaskType, TodolistWithoutRedux} from './TodolistWithoutRedux';
 import {v1} from 'uuid';
 import AddItemForm from './AddItemForm';
-import {AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography} from '@material-ui/core';
-import {Menu} from '@material-ui/icons';
+import {AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography} from '@mui/material';
+import {Menu} from '@mui/icons-material';
 
 export type FilterValuesType = 'all' | 'active' | 'completed'
 export type TodoListType = {

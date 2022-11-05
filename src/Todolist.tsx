@@ -1,12 +1,12 @@
 import React, {memo, useCallback} from 'react';
-import {Button, ButtonGroup, IconButton, List} from '@material-ui/core';
-import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
+import {Button, IconButton, List} from '@mui/material';
+import {DeleteOutlined} from '@mui/icons-material';
 import {FilterValuesType} from './App';
 import EditableSpan from './EditableSpan';
 import AddItemForm from './AddItemForm';
 import {useDispatch, useSelector} from 'react-redux';
 import {AppRootStateType} from './store/store';
-import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from './store/tasks-reducer';
+import {addTaskAC} from './store/tasks-reducer';
 import {changeTodolistFilterAC, changeTodolistTitleAC, removeTodolistAC} from './store/todolists-reducer';
 import {Task} from './Task';
 
@@ -60,7 +60,7 @@ export const Todolist = memo(({todolistId, title, filter}: TodolistReduxPropsTyp
                     onClick={removeTodolist}
                     size="small"
                     color="primary">
-                    <DeleteOutlineIcon />
+                    <DeleteOutlined />
                 </IconButton>
             </h3>
             <AddItemForm addItem={addTask} />
@@ -76,7 +76,6 @@ export const Todolist = memo(({todolistId, title, filter}: TodolistReduxPropsTyp
                 }
             </List>
             <div>
-                <ButtonGroup size='small' variant='contained' disableElevation>
                     <ButtonWrapper
                         titleButton='all'
                         variant={filter === 'all' ? 'outlined' : 'text'}
@@ -95,7 +94,6 @@ export const Todolist = memo(({todolistId, title, filter}: TodolistReduxPropsTyp
                         color='secondary'
                         onClickHandler={onCompletedClickHandler}
                     />
-                </ButtonGroup>
             </div>
         </div>
     )

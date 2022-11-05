@@ -1,10 +1,11 @@
 import React, {ChangeEvent, memo} from 'react';
-import {Checkbox, IconButton, ListItem} from '@material-ui/core';
+import {Checkbox, IconButton, ListItem} from '@mui/material';
 import EditableSpan from './EditableSpan';
-import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
+import {DeleteOutlined} from '@mui/icons-material';
 import {TaskType} from './Todolist';
 import {useDispatch} from 'react-redux';
 import {changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from './store/tasks-reducer';
+
 
 
 
@@ -42,7 +43,7 @@ export const Task = memo(({task, todolistId}: TaskPropsType) => {
                 color="primary"
                 size="small"
                 onClick={removeTask}>
-                <DeleteOutlineIcon />
+                <DeleteOutlined />
             </IconButton>
         </ListItem>
     );

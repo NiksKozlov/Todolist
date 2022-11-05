@@ -2,8 +2,10 @@ import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
 import {FilterValuesType} from './AppWithoutReducerAndRedux';
 import AddItemForm from './AddItemForm';
 import EditableSpan from './EditableSpan';
-import {Button, ButtonGroup, Checkbox, IconButton, List, ListItem} from '@material-ui/core';
-import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
+import {Button, ButtonGroup, Checkbox, IconButton, List, ListItem} from '@mui/material';
+import {DeleteOutlined} from '@mui/icons-material';
+
+
 
 export type TaskType = {
     id: string
@@ -48,7 +50,7 @@ export function TodolistWithoutRedux(props: PropsType) {
                         color='primary'
                         size="small"
                         onClick={() => props.removeTask(task.id, props.todolistId)}>
-                        <DeleteOutlineIcon />
+                        <DeleteOutlined />
                     </IconButton>
                 </ListItem>
             )
@@ -74,7 +76,7 @@ export function TodolistWithoutRedux(props: PropsType) {
                     onClick={() => props.removeTodolist(props.todolistId)}
                     color='primary'
                 >
-                    <DeleteOutlineIcon />
+                    <DeleteOutlined />
                 </IconButton>
             </h3>
             <AddItemForm addItem={addTask} />

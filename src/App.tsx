@@ -2,12 +2,12 @@ import React, {useCallback} from 'react';
 import './App.css';
 import {TaskType} from './Todolist';
 import AddItemForm from './AddItemForm';
-import {AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography} from '@material-ui/core';
-import {Menu} from '@material-ui/icons';
 import {addTodolistAC} from './store/todolists-reducer';
 import {useDispatch, useSelector} from 'react-redux';
 import {AppRootStateType} from './store/store';
 import {Todolist} from './Todolist';
+import {AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography} from '@mui/material';
+import {Menu} from '@mui/icons-material';
 
 export type FilterValuesType = 'all' | 'active' | 'completed'
 export type TodolistType = {
