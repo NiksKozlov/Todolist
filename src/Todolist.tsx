@@ -69,7 +69,7 @@ export const Todolist = memo(({todolistId, title, filter}: TodolistReduxPropsTyp
                     tasks.map(t => {
                         return <Task
                             key={t.id}
-                            task={t}
+                            taskId={t.id}
                             todolistId={todolistId}
                         />
                     })
