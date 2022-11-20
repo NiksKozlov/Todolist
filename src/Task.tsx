@@ -2,12 +2,10 @@ import React, {ChangeEvent, memo, useCallback} from 'react';
 import {Checkbox, IconButton, ListItem} from '@mui/material';
 import EditableSpan from './EditableSpan';
 import {DeleteOutlined} from '@mui/icons-material';
-import {TaskType} from './Todolist';
 import {useDispatch, useSelector} from 'react-redux';
 import {changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from './store/tasks-reducer';
 import {AppRootStateType} from './store/store';
-
-
+import {TaskStatuses, TaskType} from './api/todolists-api';
 
 
 export type TaskPropsType = {
@@ -25,7 +23,7 @@ export const Task = memo(({taskId, todolistId}: TaskPropsType) => {
     const removeTask = () => dispatch(removeTaskAC(taskId, todolistId))
     const changeTaskStatus = (e: ChangeEvent<HTMLInputElement>) => {
         let newIsDoneValue = e.currentTarget.checked
-        dispatch(changeTaskStatusAC(taskId, newIsDoneValue, todolistId))
+        dispatch(changeTaskStatusAC(taskId, newIsDoneValue ? TaskStatuses.Completed : TaskStatuses.New, todolistId))
     }
     const changeTaskTitle = useCallback((title: string) => {
         dispatch(changeTaskTitleAC(taskId, title, todolistId))
@@ -34,19 +32,16 @@ export const Task = memo(({taskId, todolistId}: TaskPropsType) => {
     return (
         <ListItem
             key={taskId}
-            className={task.isDone ? 'isDone' : ''}
+            className={task.status === TaskStatuses.Completed ? 'isDone' : ''}
             style={{padding: '0px'}}
         >
             <Checkbox
                 style={{color: 'hotpink'}}
                 onChange={changeTaskStatus}
-                checked={task.isDone}
+                checked={task.status === TaskStatuses.Completed}
             />
             <EditableSpan title={task.title} changeTitle={changeTaskTitle} />
-            <IconButton
-                color="primary"
-                size="small"
-                onClick={removeTask}>
+            <IconButton color="primary" size="small" onClick={removeTask}>
                 <DeleteOutlined />
             </IconButton>
         </ListItem>

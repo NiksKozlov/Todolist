@@ -9,21 +9,17 @@ import {AppRootStateType} from './store/store';
 import {addTaskAC} from './store/tasks-reducer';
 import {changeTodolistFilterAC, changeTodolistTitleAC, removeTodolistAC} from './store/todolists-reducer';
 import {Task} from './Task';
+import {TaskStatuses, TaskType} from './api/todolists-api';
 
-export type TaskType = {
-    id: string
-    title: string
-    isDone: boolean
-}
 
-type TodolistReduxPropsType = {
+type TodolistPropsType = {
     todolistId: string
     title: string
     filter: FilterValuesType
 }
 
 
-export const Todolist = memo(({todolistId, title, filter}: TodolistReduxPropsType) => {
+export const Todolist = memo(({todolistId, title, filter}: TodolistPropsType) => {
 
     let tasks = useSelector<AppRootStateType, Array<TaskType>>(state => state.tasks[todolistId])
     const dispatch = useDispatch()
@@ -40,16 +36,16 @@ export const Todolist = memo(({todolistId, title, filter}: TodolistReduxPropsTyp
         dispatch(addTaskAC(title, todolistId))
     }, [todolistId])
 
-    const onAllClickHandler = useCallback(() => dispatch(changeTodolistFilterAC('all', todolistId)), [todolistId])
-    const onActiveClickHandler = useCallback(() => dispatch(changeTodolistFilterAC('active', todolistId)), [todolistId])
-    const onCompletedClickHandler = useCallback(() => dispatch(changeTodolistFilterAC('completed', todolistId)), [todolistId])
+    const onAllClickHandler = useCallback(() => dispatch(changeTodolistFilterAC(todolistId, 'all')), [todolistId])
+    const onActiveClickHandler = useCallback(() => dispatch(changeTodolistFilterAC(todolistId, 'active')), [todolistId])
+    const onCompletedClickHandler = useCallback(() => dispatch(changeTodolistFilterAC(todolistId, 'completed')), [todolistId])
 
 
     if (filter === 'active') {
-        tasks = tasks.filter(t => !t.isDone)
+        tasks = tasks.filter(t => t.status === TaskStatuses.New)
     }
     if (filter === 'completed') {
-        tasks = tasks.filter(t => t.isDone)
+        tasks = tasks.filter(t => t.status === TaskStatuses.Completed)
     }
 
     return (
