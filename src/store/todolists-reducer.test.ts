@@ -9,7 +9,7 @@ import {
 } from './todolists-reducer';
 
 
-let todolistId1: string
+/*let todolistId1: string
 let todolistId2: string
 
 let startState: Array<TodolistType>
@@ -60,6 +60,6 @@ test('correct todolist should change its name', () => {
 
     expect(endState[0].title).toBe("What to learn");
     expect(endState[1].title).toBe(newTodolistTitle);
-});
+});*/
 
 

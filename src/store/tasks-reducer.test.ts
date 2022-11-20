@@ -2,7 +2,7 @@ import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, tasksRed
 import { TasksStateType } from '../App'
 import {addTodolistAC} from './todolists-reducer';
 
-
+/*
 let startState: TasksStateType
 
 beforeEach(() => {
@@ -88,5 +88,5 @@ test('new array should be added when new todolist is added', () => {
 
     expect(keys.length).toBe(3)
     expect(endState[newKey]).toEqual([])
-})
+})*/
 

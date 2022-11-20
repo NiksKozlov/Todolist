@@ -1,6 +1,7 @@
 import {TasksStateType, TodolistType} from '../App';
 import {addTodolistAC, removeTodolistAC, todolistsReducer} from './todolists-reducer';
 import {tasksReducer} from './tasks-reducer';
+/*
 
 test('ids should be equals', () => {
     const startTasksState: TasksStateType = {}
@@ -42,4 +43,4 @@ test('property with todolistId should be deleted', () => {
 
     expect(keys.length).toBe(1)
     expect(endState['todolistId2']).toBeUndefined()
-})
+})*/
