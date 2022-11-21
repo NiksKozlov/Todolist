@@ -30,13 +30,13 @@ export const Todolist = memo(({todolistId, title, filter}: TodolistPropsType) =>
         dispatch(getTasksTC(todolistId))
     }, [])
 
-    const removeTodolist = () => {
+    const removeTodolist = useCallback(() => {
         dispatch(removeTodolistAC(todolistId))
-    }
+    },[])
 
-    const changeTodoLIstTitle = (title: string) => {
-        dispatch(changeTodolistTitleAC(title, todolistId))
-    }
+    const changeTodolistTitle = useCallback((title: string) => {
+        dispatch(changeTodolistTitleAC(todolistId, title))
+    },[])
 
     const addTask = useCallback((title: string) => {
         dispatch(addTaskAC(title, todolistId))
@@ -57,7 +57,7 @@ export const Todolist = memo(({todolistId, title, filter}: TodolistPropsType) =>
     return (
         <div>
             <h3>
-                <EditableSpan title={title} changeTitle={changeTodoLIstTitle} />
+                <EditableSpan title={title} changeTitle={changeTodolistTitle} />
                 <IconButton
                     onClick={removeTodolist}
                     size="small"
