@@ -1,13 +1,13 @@
 import React, {useCallback, useEffect} from 'react';
 import './App.css';
 import AddItemForm from './AddItemForm';
-import {addTodolistAC, setTodolistsAC, TodolistDomainType} from './store/todolists-reducer';
-import {useDispatch, useSelector} from 'react-redux';
-import {AppRootStateType} from './store/store';
+import {addTodolistAC, getTodolistsTC, TodolistDomainType} from './store/todolists-reducer';
+import {useSelector} from 'react-redux';
+import {AppRootStateType, useAppDispatch} from './store/store';
 import {Todolist} from './Todolist';
 import {AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography} from '@mui/material';
 import {Menu} from '@mui/icons-material';
-import {TaskType, todolistsAPI} from './api/todolists-api';
+import {TaskType} from './api/todolists-api';
 
 export type FilterValuesType = 'all' | 'active' | 'completed'
 
@@ -24,17 +24,14 @@ const App = () => {
 
     const todolists = useSelector<AppRootStateType, Array<TodolistDomainType>>(state => state.todolists)
 
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
 
     const addTodolist = useCallback((title: string) => {
         dispatch(addTodolistAC(title))
     }, [dispatch])
 
     useEffect(() => {
-        todolistsAPI.getTodolists()
-            .then((res) => {
-                dispatch(setTodolistsAC(res.data))
-            })
+        dispatch(getTodolistsTC())
     }, [])
 
     return (

@@ -1,6 +1,6 @@
-import { v1 } from 'uuid';
-import { TodolistType } from '../api/todolists-api'
-
+import {v1} from 'uuid';
+import {todolistsAPI, TodolistType} from '../api/todolists-api'
+import {Dispatch} from 'redux';
 
 
 export type RemoveTodolistActionType = ReturnType<typeof removeTodolistAC>
@@ -55,7 +55,15 @@ export const changeTodolistTitleAC = (id: string, title: string) => {
 export const changeTodolistFilterAC = (id: string, filter: FilterValuesType) => {
     return {type: 'CHANGE-TODOLIST-FILTER', id: id, filter: filter} as const
 }
-
 export const setTodolistsAC = (todolists: TodolistType[]) => {
     return {type: 'SET-TODOS', todolists} as const
+}
+
+export const getTodolistsTC = () => {
+    return (dispatch: Dispatch) => {
+        todolistsAPI.getTodolists()
+            .then(res => {
+                dispatch(setTodolistsAC(res.data))
+            })
+    }
 }
