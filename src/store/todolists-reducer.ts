@@ -2,16 +2,12 @@ import {todolistsAPI, TodolistType} from '../api/todolists-api'
 import {Dispatch} from 'redux';
 
 
-type RemoveTodolistActionType = ReturnType<typeof removeTodolistAC>
-type AddTodolistActionType = ReturnType<typeof addTodolistAC>
-type ChangeTodolistTitleActionType = ReturnType<typeof changeTodolistTitleAC>
-type ChangeTodolistFilterActionType = ReturnType<typeof changeTodolistFilterAC>
-type SetTodolistsActionType = ReturnType<typeof setTodolistsAC>
-
-type ActionsType = RemoveTodolistActionType | AddTodolistActionType
-    | ChangeTodolistTitleActionType
-    | ChangeTodolistFilterActionType
-    | SetTodolistsActionType
+type ActionsType =
+    | ReturnType<typeof removeTodolistAC>
+    | ReturnType<typeof addTodolistAC>
+    | ReturnType<typeof changeTodolistTitleAC>
+    | ReturnType<typeof changeTodolistFilterAC>
+    | ReturnType<typeof setTodolistsAC>
 
 const initialState: Array<TodolistDomainType> = [
     /*{id: todolistId1, title: 'What to learn', filter: 'all', addedDate: '', order: 0},

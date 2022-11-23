@@ -1,27 +1,19 @@
 import {TasksStateType} from '../App';
-import {AddTodolistActionType, RemoveTodolistActionType, SetTodolistsActionType} from './todolists-reducer';
+import {addTodolistAC, removeTodolistAC, setTodolistsAC,} from './todolists-reducer';
 import {TaskStatuses, TaskType, todolistsAPI, UpdateTaskModelType} from '../api/todolists-api'
 import {Dispatch} from 'redux';
 import {AppRootStateType} from './store';
 
-type RemoveTaskActionType = ReturnType<typeof removeTaskAC>
 
-type AddTaskActionType = ReturnType<typeof addTaskAC>
-
-type ChangeTaskStatusActionType = ReturnType<typeof changeTaskStatusAC>
-
-type ChangeTaskTitleActionType = ReturnType<typeof changeTaskTitleAC>
-
-type SetTasksActionType = ReturnType<typeof setTasksAC>
-
-type ActionsType = RemoveTaskActionType
-    | AddTaskActionType
-    | ChangeTaskStatusActionType
-    | ChangeTaskTitleActionType
-    | AddTodolistActionType
-    | RemoveTodolistActionType
-    | SetTodolistsActionType
-    | SetTasksActionType
+type ActionsType =
+    | ReturnType<typeof removeTaskAC>
+    | ReturnType<typeof addTaskAC>
+    | ReturnType<typeof changeTaskStatusAC>
+    | ReturnType<typeof changeTaskTitleAC>
+    | ReturnType<typeof addTodolistAC>
+    | ReturnType<typeof removeTodolistAC>
+    | ReturnType<typeof setTodolistsAC>
+    | ReturnType<typeof setTasksAC>
 
 const initialState: TasksStateType = {
     /*"todolistId1": [
@@ -155,7 +147,7 @@ export const changeTaskStatusTC = (todolistId: string, taskId: string, status: T
             }
             todolistsAPI.updateTask(todolistId, taskId, model)
                 .then(res => {
-                    dispatch(changeTaskStatusAC(taskId,  todolistId, res.data.data.item.status))
+                    dispatch(changeTaskStatusAC(taskId, todolistId, res.data.data.item.status))
                 })
         }
     }
@@ -176,7 +168,7 @@ export const changeTaskTitleTC = (todolistId: string, taskId: string, title: str
             }
             todolistsAPI.updateTask(todolistId, taskId, model)
                 .then(res => {
-                    dispatch(changeTaskTitleAC(taskId,  todolistId, res.data.data.item.title))
+                    dispatch(changeTaskTitleAC(taskId, todolistId, res.data.data.item.title))
                 })
         }
     }
