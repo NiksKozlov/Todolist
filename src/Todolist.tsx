@@ -9,7 +9,7 @@ import {AppRootStateType, useAppDispatch} from './store/store';
 import {addTaskAC, addTaskTC, getTasksTC} from './store/tasks-reducer';
 import {
     changeTodolistFilterAC,
-    changeTodolistTitleAC,
+    changeTodolistTitleAC, changeTodolistTitleTC,
     removeTodolistAC,
     removeTodolistTC
 } from './store/todolists-reducer';
@@ -42,7 +42,7 @@ export const Todolist = memo(({todolistId, title, filter}: TodolistPropsType) =>
     },[todolistId])
 
     const changeTodolistTitle = useCallback((title: string) => {
-        dispatch(changeTodolistTitleAC(todolistId, title))
+        dispatch(changeTodolistTitleTC(todolistId, title))
     },[todolistId])
 
     const addTask = useCallback((title: string) => {
