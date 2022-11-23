@@ -20,6 +20,8 @@ export const Task = memo(({taskId, todolistId}: TaskPropsType) => {
 
     const dispatch = useAppDispatch()
 
+
+
     const removeTask = useCallback(() => dispatch(removeTaskTC(todolistId, taskId)),[])
 
     const changeTaskStatus = useCallback((e: ChangeEvent<HTMLInputElement>) => {
