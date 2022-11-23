@@ -8,7 +8,7 @@ import {
     changeTaskTitleAC,
     removeTaskAC,
     removeTaskTC,
-    updateTaskStatusTC
+    changeTaskStatusTC
 } from './store/tasks-reducer';
 import {AppRootStateType, useAppDispatch} from './store/store';
 import {TaskStatuses, TaskType} from './api/todolists-api';
@@ -28,12 +28,12 @@ export const Task = memo(({taskId, todolistId}: TaskPropsType) => {
 
 
 
-    const removeTask = useCallback(() => dispatch(removeTaskTC(todolistId, taskId)),[])
+    const removeTask = useCallback(() => dispatch(removeTaskTC(todolistId, taskId)),[taskId, todolistId])
 
     const changeTaskStatus = useCallback((e: ChangeEvent<HTMLInputElement>) => {
         let newIsDoneValue = e.currentTarget.checked
-        dispatch(updateTaskStatusTC(todolistId, taskId, newIsDoneValue ? TaskStatuses.Completed : TaskStatuses.New))
-    },[])
+        dispatch(changeTaskStatusTC(todolistId, taskId, newIsDoneValue ? TaskStatuses.Completed : TaskStatuses.New))
+    },[taskId, todolistId])
 
     const changeTaskTitle = useCallback((title: string) => {
         dispatch(changeTaskTitleAC(taskId, title, todolistId))

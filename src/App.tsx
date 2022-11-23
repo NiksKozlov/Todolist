@@ -1,7 +1,7 @@
 import React, {useCallback, useEffect} from 'react';
 import './App.css';
 import AddItemForm from './AddItemForm';
-import {addTodolistAC, getTodolistsTC, TodolistDomainType} from './store/todolists-reducer';
+import {addTodolistAC, addTodolistTC, getTodolistsTC, TodolistDomainType} from './store/todolists-reducer';
 import {useSelector} from 'react-redux';
 import {AppRootStateType, useAppDispatch} from './store/store';
 import {Todolist} from './Todolist';
@@ -27,8 +27,8 @@ const App = () => {
     const dispatch = useAppDispatch()
 
     const addTodolist = useCallback((title: string) => {
-        dispatch(addTodolistAC(title))
-    }, [dispatch])
+        dispatch(addTodolistTC(title))
+    }, [])
 
     useEffect(() => {
         dispatch(getTodolistsTC())
