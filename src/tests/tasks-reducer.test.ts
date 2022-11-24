@@ -1,7 +1,6 @@
-import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, tasksReducer} from './tasks-reducer'
-import { TasksStateType } from '../App'
-import {addTodolistAC} from './todolists-reducer';
+import react from 'react'
 
+const abc = 'abc'
 /*
 let startState: TasksStateType
 

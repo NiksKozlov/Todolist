@@ -1,5 +1,5 @@
-import {tasksReducer} from './tasks-reducer'
-import {todolistsReducer} from './todolists-reducer'
+import {tasksReducer} from '../features/TodolistsList/tasks-reducer'
+import {todolistsReducer} from '../features/TodolistsList/todolists-reducer'
 import {AnyAction, applyMiddleware, combineReducers, legacy_createStore} from 'redux'
 import thunkMiddleware, {ThunkDispatch} from 'redux-thunk'
 import {useDispatch} from 'react-redux';
@@ -11,7 +11,7 @@ const rootReducer = combineReducers({
     tasks: tasksReducer,
     todolists: todolistsReducer
 })
-// непосредственно создаём store
+// непосредственно создаём tests
 export const store = legacy_createStore(rootReducer, applyMiddleware(thunkMiddleware))
 // определить автоматически тип всего объекта состояния
 export type AppRootStateType = ReturnType<typeof rootReducer>
@@ -25,6 +25,6 @@ export const useAppDispatch = () => useDispatch<ThunkDispatchActionType>()
 
 
 
-// а это, чтобы можно было в консоли браузера обращаться к store в любой момент
+// а это, чтобы можно было в консоли браузера обращаться к tests в любой момент
 // @ts-ignore
 window.store = store

@@ -1,13 +1,6 @@
-import {v1} from 'uuid';
-import {FilterValuesType, TodolistType} from '../App';
-import {
-    addTodolistAC,
-    changeTodolistFilterAC,
-    changeTodolistTitleAC,
-    removeTodolistAC,
-    todolistsReducer
-} from './todolists-reducer';
+import react from 'react'
 
+const abc = 'abc'
 
 /*let todolistId1: string
 let todolistId2: string

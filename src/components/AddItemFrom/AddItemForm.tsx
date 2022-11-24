@@ -8,44 +8,46 @@ type AddItemFormPropsType = {
 
 export const AddItemForm = memo((props: AddItemFormPropsType) => {
 
-    const [title, setTitle] = useState<string>('')
-    const [error, setError] = useState<boolean>(false)
+    const [title, setTitle] = useState('')
+    const [error, setError] = useState<string | null>(null)
 
-    const changeTitle = (e: ChangeEvent<HTMLInputElement>) => {
-        if (error) setError(false)
+    const addItem = () => {
+        if (title.trim() !== '') {
+            props.addItem(title)
+            setTitle('')
+        } else {
+            setError('Title is required')
+        }
+    }
+
+    const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
         setTitle(e.currentTarget.value)
     }
     const onKeyDownAddTask = (e: KeyboardEvent<HTMLInputElement>) => {
-        if (e.key === 'Enter') addItem()
-    }
-    const addItem = () => {
-        const trimmedTitle = title.trim()
-        if (trimmedTitle) {
-            props.addItem(trimmedTitle)
-        } else {
-            setError(true)
+        if (error !== null) {
+            setError(null)
         }
-        setTitle('')
+        if (e.key === 'Enter') {
+            addItem()
+        }
     }
 
     return (
         <div>
             <TextField
                 size={'small'}
+                error={!!error}
                 variant={'outlined'}
                 value={title}
-                onChange={changeTitle}
+                onChange={onChangeHandler}
                 onKeyDown={onKeyDownAddTask}
-                error={error}
                 label={'Title'}
-                helperText={error && 'Title is required!'}
+                helperText={error}
             />
-                <IconButton onClick={addItem}>
+                <IconButton color='primary' onClick={addItem}>
                     <AddBox style={ {color: 'hotpink'} }/>
                 </IconButton>
 
         </div>
     )
 })
-
-export default AddItemForm;
