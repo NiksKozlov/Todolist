@@ -1,5 +1,4 @@
 import React, {useCallback, useEffect} from 'react'
-import {useSelector} from 'react-redux'
 import {
     addTodolistTC,
     changeTodolistFilterAC,
@@ -13,15 +12,15 @@ import {addTaskTC, removeTaskTC, TasksStateType, updateTaskTC} from './tasks-red
 
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
-import {AppRootStateType, useAppDispatch} from '../../app/store';
+import {useAppDispatch, useAppSelector} from '../../app/store';
 import {AddItemForm} from '../../components/AddItemFrom/AddItemForm';
 import {TaskStatuses} from '../../api/todolists-api';
 import {Todolist} from './Todolist/Todolist';
 
 export const TodolistsList: React.FC = () => {
 
-    const todolists = useSelector<AppRootStateType, Array<TodolistDomainType>>(state => state.todolists)
-    const tasks = useSelector<AppRootStateType, TasksStateType>(state => state.tasks)
+    const todolists = useAppSelector<Array<TodolistDomainType>>(state => state.todolists)
+    const tasks = useAppSelector<TasksStateType>(state => state.tasks)
 
     const dispatch = useAppDispatch()
 
@@ -76,6 +75,7 @@ export const TodolistsList: React.FC = () => {
                             <Todolist
                                 id={tl.id}
                                 title={tl.title}
+                                entityStatus={tl.entityStatus}
                                 tasks={allTodolistTasks}
                                 removeTask={removeTask}
                                 changeFilter={changeFilter}
