@@ -1,7 +1,7 @@
 import {ResultStatuses, todolistsAPI, TodolistType} from '../../api/todolists-api'
 import {Dispatch} from 'redux';
-import {RequestStatusType, setStatusAC, SetStatusType} from '../../app/app-reducer';
-import {handleServerAppError} from '../../utils/error-utils';
+import {RequestStatusType, setAppStatusAC, SetAppStatusType} from '../../app/app-reducer';
+import {handleServerAppError, handleServerNetworkError} from '../../utils/error-utils';
 import {AppThunkDispatch} from '../../app/store';
 
 
@@ -32,15 +32,15 @@ export const todolistsReducer = (state: Array<TodolistDomainType> = initialState
                     entityStatus: 'idle'
                 },
                 ...state
-                ]
+            ]
         case 'CHANGE-TODOLIST-FILTER':
             return state.map(tl => tl.id === action.id ? {...tl, filter: action.filter} : tl)
         case 'CHANGE-TODOLIST-TITLE':
             return state.map(tl => tl.id === action.id ? {...tl, title: action.title} : tl)
+        case 'CHANGE-TODOLIST-ENTITY-STATUS':
+            return state.map(tl => tl.id === action.id ? {...tl, entityStatus: action.entityStatus} : tl)
         case 'SET-TODOS':
             return action.todolists.map(tl => ({...tl, filter: 'all', entityStatus: 'idle'}))
-        case 'SET-ENTITY-STATUS':
-            return state.map(tl => tl.id === action.id ? {...tl, entityStatus: action.entityStatus} : tl)
         default:
             return state
     }
@@ -58,52 +58,74 @@ export const changeTodolistFilterAC = (id: string, filter: FilterValuesType) =>
 export const setTodolistsAC = (todolists: TodolistType[]) =>
     ({type: 'SET-TODOS', todolists} as const)
 export const changeTodolistEntityStatusAC = (id: string, entityStatus: RequestStatusType) =>
-    ({type: 'SET-ENTITY-STATUS', id, entityStatus} as const)
+    ({type: 'CHANGE-TODOLIST-ENTITY-STATUS', id, entityStatus} as const)
 
 // thunks
 export const getTodolistsTC = () => (dispatch: AppThunkDispatch) => {
-        dispatch(setStatusAC('loading'))
-        todolistsAPI.getTodolists()
-            .then(res => {
-                dispatch(setTodolistsAC(res.data))
-                dispatch(setStatusAC('succeeded'))
-            })
+    dispatch(setAppStatusAC('loading'))
+    todolistsAPI.getTodolists()
+        .then(res => {
+            dispatch(setTodolistsAC(res.data))
+            dispatch(setAppStatusAC('succeeded'))
+        })
+        .catch(e => {
+            handleServerNetworkError(e, dispatch)
+        })
 }
 
 export const removeTodolistTC = (todolistId: string) => (dispatch: AppThunkDispatch) => {
-        dispatch(setStatusAC('loading'))
-        dispatch(changeTodolistEntityStatusAC(todolistId, 'loading'))
-        todolistsAPI.deleteTodolist(todolistId)
-            .then(res => {
-                    dispatch(removeTodolistAC(todolistId))
-                    dispatch(setStatusAC('succeeded'))
-            })
-            .catch(e => {
-                dispatch(setStatusAC('failed'))
+    dispatch(setAppStatusAC('loading'))
+    dispatch(changeTodolistEntityStatusAC(todolistId, 'loading'))
+    todolistsAPI.deleteTodolist(todolistId)
+        .then(res => {
+            if (res.data.resultCode === ResultStatuses.OK) {
+                dispatch(removeTodolistAC(todolistId))
+                dispatch(setAppStatusAC('succeeded'))
+            } else {
+                handleServerAppError(res.data, dispatch)
                 dispatch(changeTodolistEntityStatusAC(todolistId, 'failed'))
-            })
+            }
+        })
+        .catch(e => {
+            handleServerNetworkError(e, dispatch)
+            dispatch(changeTodolistEntityStatusAC(todolistId, 'failed'))
+        })
 }
 
 export const addTodolistTC = (title: string) => (dispatch: AppThunkDispatch) => {
-        dispatch(setStatusAC('loading'))
-        todolistsAPI.createTodolist(title)
-            .then(res => {
-                if (res.data.resultCode === ResultStatuses.OK) {
-                    dispatch(addTodolistAC(res.data.data.item))
-                    dispatch(setStatusAC('succeeded'))
-                } else {
-                    handleServerAppError<{ item: TodolistType }>(res.data, dispatch)
-                }
-            })
+    dispatch(setAppStatusAC('loading'))
+    todolistsAPI.createTodolist(title)
+        .then(res => {
+            if (res.data.resultCode === ResultStatuses.OK) {
+                dispatch(addTodolistAC(res.data.data.item))
+                dispatch(setAppStatusAC('succeeded'))
+            } else {
+                handleServerAppError<{ item: TodolistType }>(res.data, dispatch)
+            }
+        })
+        .catch(e => {
+            handleServerNetworkError(e, dispatch)
+        })
 }
 
 export const changeTodolistTitleTC = (todolistId: string, title: string) => (dispatch: AppThunkDispatch) => {
-        dispatch(setStatusAC('loading'))
-        todolistsAPI.updateTodolist(todolistId, title)
-            .then(res => {
+    dispatch(setAppStatusAC('loading'))
+    dispatch(changeTodolistEntityStatusAC(todolistId, 'loading'))
+    todolistsAPI.updateTodolist(todolistId, title)
+        .then(res => {
+            if (res.data.resultCode === ResultStatuses.OK) {
                 dispatch(changeTodolistTitleAC(todolistId, title))
-                dispatch(setStatusAC('succeeded'))
-            })
+                dispatch(setAppStatusAC('succeeded'))
+                dispatch(changeTodolistEntityStatusAC(todolistId, 'succeeded'))
+            } else {
+                handleServerAppError(res.data, dispatch)
+                dispatch(changeTodolistEntityStatusAC(todolistId, 'failed'))
+            }
+        })
+        .catch(e => {
+            handleServerNetworkError(e, dispatch)
+            dispatch(changeTodolistEntityStatusAC(todolistId, 'failed'))
+        })
 }
 
 // types
@@ -117,5 +139,5 @@ type ActionsType =
     | ReturnType<typeof changeTodolistTitleAC>
     | ReturnType<typeof changeTodolistFilterAC>
     | SetTodolistsActionType
-    | SetStatusType
+    | SetAppStatusType
     | ReturnType<typeof changeTodolistEntityStatusAC>
