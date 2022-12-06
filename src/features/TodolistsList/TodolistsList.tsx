@@ -4,7 +4,7 @@ import {
     changeTodolistFilterAC,
     changeTodolistTitleTC,
     FilterValuesType,
-    getTodolistsTC,
+    fetchTodolistsTC,
     removeTodolistTC,
     TodolistDomainType
 } from './todolists-reducer'
@@ -25,7 +25,7 @@ export const TodolistsList: React.FC = () => {
     const dispatch = useAppDispatch()
 
     useEffect(() => {
-        dispatch(getTodolistsTC())
+        dispatch(fetchTodolistsTC())
     }, [])
 
     const removeTask = useCallback(function (id: string, todolistId: string) {
@@ -73,15 +73,12 @@ export const TodolistsList: React.FC = () => {
                     return <Grid item key={tl.id}>
                         <Paper style={{padding: '10px'}}>
                             <Todolist
-                                id={tl.id}
-                                title={tl.title}
-                                entityStatus={tl.entityStatus}
+                                todolist={tl}
                                 tasks={allTodolistTasks}
                                 removeTask={removeTask}
                                 changeFilter={changeFilter}
                                 addTask={addTask}
                                 changeTaskStatus={changeStatus}
-                                filter={tl.filter}
                                 removeTodolist={removeTodolist}
                                 changeTaskTitle={changeTaskTitle}
                                 changeTodolistTitle={changeTodolistTitle}

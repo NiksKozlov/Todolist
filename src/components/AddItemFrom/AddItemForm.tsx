@@ -47,7 +47,7 @@ export const AddItemForm = memo((props: AddItemFormPropsType) => {
                 disabled={props.disabled}
             />
                 <IconButton color='primary' onClick={addItem} disabled={props.disabled}>
-                    <AddBox style={ {color: 'hotpink'} }/>
+                    <AddBox />
                 </IconButton>
 
         </div>

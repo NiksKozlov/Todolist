@@ -41,7 +41,7 @@ export const tasksReducer = (state: TasksStateType = initialState, action: Actio
         }
         case 'SET-TASKS':
             return {...state, [action.todolistId]: action.tasks.map(t => ({...t, entityStatus: 'idle'}))}
-        case 'CHANGE-TODOLIST-ENTITY-STATUS':
+        case 'CHANGE-TASK-ENTITY-STATUS':
             return {...state, [action.todolistId]: state[action.todolistId]
                     .map(t => t.id === action.taskId ? {...t, entityStatus: action.entityStatus} : t)
         }
@@ -60,7 +60,7 @@ export const updateTaskAC = (taskId: string, todolistId: string, model: UpdateDo
 export const setTasksAC = (todolistId: string, tasks: TaskType[]) =>
     ({type: 'SET-TASKS', todolistId, tasks} as const)
 export const changeTaskEntityStatusAC = (todolistId: string, taskId: string, entityStatus: RequestStatusType) =>
-    ({type: 'CHANGE-TODOLIST-ENTITY-STATUS', todolistId, taskId, entityStatus} as const)
+    ({type: 'CHANGE-TASK-ENTITY-STATUS', todolistId, taskId, entityStatus} as const)
 
 // thunks
 export const getTasksTC = (todolistId: string) => (dispatch: AppThunkDispatch) => {

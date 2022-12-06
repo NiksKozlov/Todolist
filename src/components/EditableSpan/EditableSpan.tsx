@@ -1,6 +1,7 @@
 import React, {ChangeEvent, useState, KeyboardEvent, memo} from 'react';
 import {TextField} from '@mui/material';
 
+
 type EditableSpanPropsType = {
     title: string
     onChange: (title: string) => void

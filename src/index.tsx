@@ -5,6 +5,7 @@ import * as serviceWorker from './serviceWorker';
 import App from './app/App';
 import {store} from './app/store';
 import {Provider} from 'react-redux';
+import {BrowserRouter} from 'react-router-dom';
 
 
 const root = createRoot(
@@ -12,7 +13,9 @@ const root = createRoot(
 );
 root.render(
     <Provider store={store}>
-        <App />
+        <BrowserRouter>
+            <App />
+        </BrowserRouter>
     </Provider>
 );
 
