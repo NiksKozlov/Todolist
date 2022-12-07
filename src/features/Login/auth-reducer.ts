@@ -1,8 +1,7 @@
-import { SetAppErrorActionType, setAppStatusAC, SetAppStatusActionType } from '../../app/app-reducer'
+import {SetAppErrorActionType, setAppStatusAC, SetAppStatusActionType, setInitializedAC} from '../../app/app-reducer'
 import {AppThunkDispatch} from '../../app/store';
-import {authAPI, LoginParamsType, ResultStatuses, todolistsAPI} from '../../api/todolists-api';
+import {authAPI, LoginParamsType, ResultStatuses} from '../../api/todolists-api';
 import {handleServerAppError, handleServerNetworkError} from '../../utils/error-utils';
-import {addTaskAC} from '../TodolistsList/tasks-reducer';
 
 const initialState = {
     isLoggedIn: false
@@ -35,6 +34,41 @@ export const loginTC = (data: LoginParamsType) => (dispatch: AppThunkDispatch) =
         })
         .catch(error => {
             handleServerNetworkError(error, dispatch)
+        })
+}
+
+export const logOutTC = () => (dispatch: AppThunkDispatch) => {
+    dispatch(setAppStatusAC('loading'))
+    authAPI.logOut()
+        .then(res => {
+            if (res.data.resultCode === ResultStatuses.OK) {
+                dispatch(setIsLoggedInAC(false))
+                dispatch(setAppStatusAC('succeeded'))
+            } else {
+                handleServerAppError(res.data, dispatch)
+            }
+        })
+        .catch(error => {
+            handleServerNetworkError(error, dispatch)
+        })
+}
+
+export const meTC = () => (dispatch: AppThunkDispatch) => {
+    dispatch(setAppStatusAC('loading'))
+    authAPI.me()
+        .then(res => {
+            if (res.data.resultCode === ResultStatuses.OK) {
+                dispatch(setIsLoggedInAC(true))
+                dispatch(setAppStatusAC('succeeded'))
+            } else {
+                handleServerAppError(res.data, dispatch)
+            }
+        })
+        .catch(error => {
+            handleServerNetworkError(error, dispatch)
+        })
+        .finally(() => {
+            dispatch(setInitializedAC(true))
         })
 }
 
