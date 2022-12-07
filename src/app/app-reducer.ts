@@ -24,9 +24,9 @@ export const setAppErrorAC = (error: null | string) => ({type: 'APP/SET-ERROR', 
 
 
 // types
-export type SetAppStatusType = ReturnType<typeof setAppStatusAC>
-export type SetAppErrorType = ReturnType<typeof setAppErrorAC>
+export type SetAppStatusActionType = ReturnType<typeof setAppStatusAC>
+export type SetAppErrorActionType = ReturnType<typeof setAppErrorAC>
 
 export type AppActionsType =
-    | SetAppStatusType
-    | SetAppErrorType
+    | SetAppStatusActionType
+    | SetAppErrorActionType

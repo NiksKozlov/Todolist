@@ -1,5 +1,5 @@
 import {ResultStatuses, todolistsAPI, TodolistType} from '../../api/todolists-api'
-import {RequestStatusType, setAppStatusAC, SetAppStatusType} from '../../app/app-reducer';
+import {RequestStatusType, setAppStatusAC, SetAppStatusActionType} from '../../app/app-reducer';
 import {handleServerAppError, handleServerNetworkError} from '../../utils/error-utils';
 import {AppThunkDispatch} from '../../app/store';
 
@@ -141,5 +141,5 @@ type ActionsType =
     | ReturnType<typeof changeTodolistTitleAC>
     | ReturnType<typeof changeTodolistFilterAC>
     | SetTodolistsActionType
-    | SetAppStatusType
+    | SetAppStatusActionType
     | ReturnType<typeof changeTodolistEntityStatusAC>

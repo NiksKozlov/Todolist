@@ -1,5 +1,5 @@
 import React, {memo, useCallback, useEffect} from 'react';
-import {Button, IconButton, ButtonGroup} from '@mui/material';
+import {Button, ButtonGroup, IconButton} from '@mui/material';
 import {Delete} from '@mui/icons-material';
 import EditableSpan from '../../../components/EditableSpan/EditableSpan';
 import {useAppDispatch} from '../../../app/store';
@@ -8,7 +8,6 @@ import {FilterValuesType, TodolistDomainType} from '../todolists-reducer';
 import {Task} from './Task/Task';
 import {TaskStatuses, TaskType} from '../../../api/todolists-api';
 import {AddItemForm} from '../../../components/AddItemFrom/AddItemForm';
-import {RequestStatusType} from '../../../app/app-reducer';
 
 
 type PropsType = {
@@ -94,36 +93,4 @@ export const Todolist = memo((props: PropsType) => {
     </div>
 })
 
-// Более красивый кейс
-//     <ButtonGroup size="small" variant="contained" disableElevation>
-//          <Button
-//              color={props.filter === 'all' ? 'secondary' : 'primary'}
-//              onClick={onAllClickHandler}>All
-//          </Button>
-//          <Button
-//              color={props.filter === 'active' ? 'secondary' : 'primary'}
-//              onClick={onActiveClickHandler}>Active
-//          </Button>
-//          <Button
-//              color={props.filter === 'completed' ? 'secondary' : 'primary'}
-//              onClick={onCompletedClickHandler}>Completed
-//          </Button>
-//     </ButtonGroup>
 
-
-// Более оптимизиравный кейс
-// <div style={{paddingTop: '10px'}}>
-//     <Button variant={props.filter === 'all' ? 'outlined' : 'text'}
-//             onClick={onAllClickHandler}
-//             color={'inherit'}
-//                 >All
-//     </Button>
-//     <Button variant={props.filter === 'active' ? 'outlined' : 'text'}
-//             onClick={onActiveClickHandler}
-//             color={'primary'}>Active
-//     </Button>
-//     <Button variant={props.filter === 'completed' ? 'outlined' : 'text'}
-//             onClick={onCompletedClickHandler}
-//             color={'secondary'}>Completed
-//     </Button>
-// </div>
