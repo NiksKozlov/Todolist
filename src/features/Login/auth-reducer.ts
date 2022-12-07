@@ -26,11 +26,11 @@ export const loginTC = (data: LoginParamsType) => (dispatch: AppThunkDispatch) =
     dispatch(setAppStatusAC('loading'))
     authAPI.login(data)
         .then(res => {
-            if (res.data.data.resultCode === ResultStatuses.OK) {
+            if (res.data.resultCode === ResultStatuses.OK) {
                 dispatch(setIsLoggedInAC(true))
                 dispatch(setAppStatusAC('succeeded'))
             } else {
-                handleServerAppError(res.data.data, dispatch)
+                handleServerAppError(res.data, dispatch)
             }
         })
         .catch(error => {

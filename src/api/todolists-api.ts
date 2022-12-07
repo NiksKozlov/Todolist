@@ -38,8 +38,8 @@ export const todolistsAPI = {
 }
 
 export const authAPI = {
-    login(formData: LoginParamsType) {
-        return instance.post<AxiosResponse<ResponseType<{userId: number}>>>('auth/login', formData)
+    login(data: LoginParamsType) {
+        return instance.post<LoginParamsType, AxiosResponse<ResponseType<{userId: number}>>>('auth/login', data)
     }
 }
 
@@ -75,7 +75,7 @@ export enum TaskPriorities {
 
 export enum ResultStatuses {
     OK = 0,
-    Error = 1,
+    ERROR = 1,
     CAPTCHA = 10
 }
 

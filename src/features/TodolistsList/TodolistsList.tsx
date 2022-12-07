@@ -16,11 +16,13 @@ import {useAppDispatch, useAppSelector} from '../../app/store';
 import {AddItemForm} from '../../components/AddItemFrom/AddItemForm';
 import {TaskStatuses} from '../../api/todolists-api';
 import {Todolist} from './Todolist/Todolist';
+import {Navigate} from 'react-router-dom';
 
 export const TodolistsList: React.FC = () => {
 
-    const todolists = useAppSelector<Array<TodolistDomainType>>(state => state.todolists)
-    const tasks = useAppSelector<TasksStateType>(state => state.tasks)
+    const todolists = useAppSelector(state => state.todolists)
+    const tasks = useAppSelector(state => state.tasks)
+    const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
 
     const dispatch = useAppDispatch()
 
@@ -60,6 +62,9 @@ export const TodolistsList: React.FC = () => {
         dispatch(addTodolistTC(title))
     }, [dispatch])
 
+    if (!isLoggedIn) {
+        return <Navigate  to={'/login'} />
+    }
 
     return <>
         <Grid container style={{padding: '20px'}}>
