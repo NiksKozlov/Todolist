@@ -5,7 +5,7 @@ import {
     TodolistDomainType,
     todolistsReducer
 } from '../features/TodolistsList/todolists-reducer';
-import {TodolistType} from '../api/todolists-api';
+import {TodolistType} from '../api/api';
 import {RequestStatusType} from '../app/app-reducer';
 
 

@@ -6,7 +6,7 @@ import {useAppDispatch} from '../../../app/store';
 import {getTasksTC} from '../tasks-reducer';
 import {FilterValuesType, TodolistDomainType} from '../todolists-reducer';
 import {Task} from './Task/Task';
-import {TaskStatuses, TaskType} from '../../../api/todolists-api';
+import {TaskStatuses, TaskType} from '../../../api/api';
 import {AddItemForm} from '../../../components/AddItemFrom/AddItemForm';
 
 

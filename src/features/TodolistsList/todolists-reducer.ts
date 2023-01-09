@@ -1,4 +1,4 @@
-import {ResultStatuses, todolistsAPI, TodolistType} from '../../api/todolists-api'
+import {ResultStatuses, todolistsAPI, TodolistType} from '../../api/api'
 import {RequestStatusType, setAppStatusAC, SetAppStatusActionType} from '../../app/app-reducer';
 import {handleServerAppError, handleServerNetworkError} from '../../utils/error-utils';
 import {AppThunkDispatch} from '../../app/store';

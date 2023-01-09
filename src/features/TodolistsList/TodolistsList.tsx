@@ -14,7 +14,7 @@ import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import {useAppDispatch, useAppSelector} from '../../app/store';
 import {AddItemForm} from '../../components/AddItemFrom/AddItemForm';
-import {TaskStatuses} from '../../api/todolists-api';
+import {TaskStatuses} from '../../api/api';
 import {Todolist} from './Todolist/Todolist';
 import {Navigate} from 'react-router-dom';
 

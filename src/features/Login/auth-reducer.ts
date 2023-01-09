@@ -1,6 +1,6 @@
 import {SetAppErrorActionType, setAppStatusAC, SetAppStatusActionType, setInitializedAC} from '../../app/app-reducer'
 import {AppThunkDispatch} from '../../app/store';
-import {authAPI, LoginParamsType, ResultStatuses} from '../../api/todolists-api';
+import {authAPI, LoginParamsType, ResultStatuses} from '../../api/api';
 import {handleServerAppError, handleServerNetworkError} from '../../utils/error-utils';
 
 const initialState = {
@@ -61,11 +61,8 @@ export const meTC = () => (dispatch: AppThunkDispatch) => {
                 dispatch(setIsLoggedInAC(true))
                 dispatch(setAppStatusAC('succeeded'))
             } else {
-                handleServerAppError(res.data, dispatch)
+                dispatch(setAppStatusAC('failed'))
             }
-        })
-        .catch(error => {
-            handleServerNetworkError(error, dispatch)
         })
         .finally(() => {
             dispatch(setInitializedAC(true))

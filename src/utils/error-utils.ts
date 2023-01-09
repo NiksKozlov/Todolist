@@ -1,6 +1,6 @@
 import {setAppErrorAC, setAppStatusAC} from '../app/app-reducer';
 import {AppThunkDispatch} from '../app/store';
-import {ResponseType} from '../api/todolists-api';
+import {ResponseType} from '../api/api';
 
 
 export const handleServerAppError =  <T>(data: ResponseType<T>, dispatch: AppThunkDispatch) => {

@@ -6,7 +6,7 @@ import {
     TaskType,
     todolistsAPI,
     UpdateTaskModelType
-} from '../../api/todolists-api'
+} from '../../api/api'
 import {AppRootStateType, AppThunkDispatch} from '../../app/store';
 import {RequestStatusType, setAppStatusAC} from '../../app/app-reducer';
 import {handleServerAppError, handleServerNetworkError} from '../../utils/error-utils';
