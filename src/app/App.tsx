@@ -52,7 +52,7 @@ const App = () => {
                     {isLoggedIn && <Button color="inherit" variant="outlined" onClick={logOutHandler}>Log out</Button>}
                 </Toolbar>
             </AppBar>
-            {status === 'loading' && <LinearProgress color="secondary" />}
+            {status === 'loading' && <LinearProgress color={'secondary'} sx={{ position: 'absolute', width: '100%' }} />}
             <Container fixed>
                 <Routes>
                     <Route path={'/'} element={<TodolistsList />} />

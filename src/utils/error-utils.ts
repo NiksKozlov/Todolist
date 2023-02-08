@@ -5,14 +5,14 @@ import {ResponseType} from '../api/api';
 
 export const handleServerAppError =  <T>(data: ResponseType<T>, dispatch: AppThunkDispatch) => {
     if (data.messages.length) {
-        dispatch(setAppErrorAC(data.messages[0]))
+        dispatch(setAppErrorAC( { error: data.messages[0] }))
     } else {
-        dispatch(setAppErrorAC('Some error occurred'))
+        dispatch(setAppErrorAC({ error: 'Some error occurred' }))
     }
-    dispatch(setAppStatusAC('failed'))
+    dispatch(setAppStatusAC({ status: 'failed' }))
 }
 
 export const handleServerNetworkError = (error: {message: string}, dispatch: AppThunkDispatch) => {
-    dispatch(setAppErrorAC(error.message))
-    dispatch(setAppStatusAC('failed'))
+    dispatch(setAppErrorAC({ error: error.message }))
+    dispatch(setAppStatusAC({ status: 'failed' }))
 }
