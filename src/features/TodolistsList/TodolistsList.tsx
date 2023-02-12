@@ -48,7 +48,7 @@ export const TodolistsList: React.FC = () => {
     }, [])
 
     const changeFilter = useCallback(function (filter: FilterValuesType, todolistId: string) {
-        dispatch(changeTodolistFilterAC(todolistId, filter))
+        dispatch(changeTodolistFilterAC({id: todolistId, filter}))
     }, [])
 
     const removeTodolist = useCallback(function (id: string) {
@@ -64,7 +64,7 @@ export const TodolistsList: React.FC = () => {
     }, [dispatch])
 
     if (!isLoggedIn) {
-        return <Navigate  to={'/login'} />
+        return <Navigate to={'/login'}/>
     }
 
     return <>
