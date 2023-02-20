@@ -1,14 +1,21 @@
-import react from 'react'
+import {addTodolistAC, TodolistDomainType, todolistsReducer} from '../features/TodolistsList/todolists-reducer';
+import {tasksReducer, TasksStateType} from '../features/TodolistsList/tasks-reducer';
 
-const abc = 'abc'
 
-/*
-
-test('ids should be equals', () => {
+test('id should be equals', () => {
     const startTasksState: TasksStateType = {}
-    const startTodolistsState: Array<TodolistType> = []
+    const startTodolistsState: Array<TodolistDomainType> = []
 
-    const action = addTodolistAC('new todolist')
+    const todolist: TodolistDomainType = {
+        id: 'any',
+        title: 'new todolist',
+        filter: 'all',
+        entityStatus: 'idle',
+        addedDate: '',
+        order: 0
+    }
+
+    const action = addTodolistAC({todolist: todolist})
 
     const endTasksState = tasksReducer(startTasksState, action)
     const endTodolistsState = todolistsReducer(startTodolistsState, action)
@@ -17,31 +24,7 @@ test('ids should be equals', () => {
     const idFromTasks = keys[0]
     const idFromTodolists = endTodolistsState[0].id
 
-    expect(idFromTasks).toBe(action.todolistId)
-    expect(idFromTodolists).toBe(action.todolistId)
+    expect(idFromTasks).toBe(action.payload.todolist.id)
+    expect(idFromTodolists).toBe(action.payload.todolist.id)
 })
 
-test('property with todolistId should be deleted', () => {
-    const startState: TasksStateType = {
-        'todolistId1': [
-            {id: '1', title: 'CSS', isDone: false},
-            {id: '2', title: 'JS', isDone: true},
-            {id: '3', title: 'React', isDone: false}
-        ],
-        'todolistId2': [
-            {id: '1', title: 'bread', isDone: false},
-            {id: '2', title: 'milk', isDone: true},
-            {id: '3', title: 'tea', isDone: false}
-        ]
-    }
-
-    const action = removeTodolistAC('todolistId2')
-
-    const endState = tasksReducer(startState, action)
-
-
-    const keys = Object.keys(endState)
-
-    expect(keys.length).toBe(1)
-    expect(endState['todolistId2']).toBeUndefined()
-})*/

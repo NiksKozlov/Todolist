@@ -8,7 +8,6 @@ import {
 import {addTodolistAC, removeTodolistAC, setTodolistsAC} from '../features/TodolistsList/todolists-reducer';
 import {TaskPriorities, TaskStatuses} from '../api/api';
 
-const abc = 'abc'
 let startState: TasksStateType
 
 beforeEach(() => {
