@@ -104,8 +104,8 @@ test('correct task should be deleted from correct array', () => {
 
     const endState = tasksReducer(startState, action)
 
-    expect(endState['todolistId1'.length]).toBe(3)
-    expect(endState['todolistId2'.length]).toBe(2)
+    expect(endState['todolistId1'].length).toBe(3)
+    expect(endState['todolistId2'].length).toBe(2)
     expect(endState['todolistId2'].every(t => t.id !== '2')).toBeTruthy()
 })
 
@@ -145,7 +145,7 @@ test('status of specified task should be changed', () => {
     expect(endState['todolistId2'][1].status).toBe(TaskStatuses.New)
 })
 
-test('Title of specified task should be changed', () => {
+test('title of specified task should be changed', () => {
 
     const action = updateTaskAC({taskId: '2', model: {title: 'meat'}, todolistId: 'todolistId2'})
 

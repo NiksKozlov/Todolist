@@ -28,7 +28,7 @@ test('correct todolist should be removed', () => {
 
     const endState = todolistsReducer(startState, removeTodolistAC({id: todolistId1}))
 
-    expect(endState.length).toBe(0);
+    expect(endState.length).toBe(1);
     expect(endState[0].id).toBe(todolistId2);
 });
 
@@ -76,7 +76,7 @@ test('todolists should be added', () => {
 test('correct entity status should be changed', () => {
     let newStatus: RequestStatusType = 'loading'
 
-    const endState = todolistsReducer([], changeTodolistEntityStatusAC({id: todolistId2, entityStatus: newStatus}))
+    const endState = todolistsReducer(startState, changeTodolistEntityStatusAC({id: todolistId2, entityStatus: newStatus}))
 
     expect(endState[0].entityStatus).toBe('idle')
     expect(endState[1].entityStatus).toBe('loading')
